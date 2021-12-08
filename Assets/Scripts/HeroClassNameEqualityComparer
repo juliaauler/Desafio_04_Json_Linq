@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
+
+class HeroClassNameEqualityComparer : IEqualityComparer<Seal>
+    {
+        public static readonly heroClassNameEqualityComparer Default = new heroClassNameEqualityComparer();
+ 
+        public bool Equals(heroes x, heroes y)
+        {
+            return x.heroClassName == y.heroClassName;
+        }
+ 
+        public int GetHashCode(Seal obj)
+        {
+            return obj.heroClassName != null ? obj.heroClassName.GetHashCode() : 0;
+        }
+    }
