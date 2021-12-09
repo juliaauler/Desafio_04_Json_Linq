@@ -8,7 +8,6 @@ public class GameData : MonoBehaviour{
     private WrapperData data;
     public Text textResult;
     private string result;
-
     private void Start(){
         data = GetComponent<LoadData>().ReadJson();
     }
@@ -61,7 +60,7 @@ public class GameData : MonoBehaviour{
             select new {ClassCountry = g.Key/*,count = g.Count()*/};
 
         //foreach(var c in res){
-        //    textResult.text += (c.Country + c.count+ "\n");
+        //    textResult.text += (c.Country + c.count + "\n");
         //}
 
         textResult.text = (res.First().ClassCountry);
@@ -78,16 +77,15 @@ public class GameData : MonoBehaviour{
     public void Question06(){
         //Listar os 10 jogadores com maior total de "gold".
         data = GetComponent<LoadData>().ReadJson();
-        //int qtde = 0;
-        for(int i = 0; i <= 10; i++){
-            var res = data.players[i].heroes.GroupBy(player => new {player.name}).Select(group => new {Sum = group.Sum(heroes => heroes.gold),Name = group.Key.name}).OrderByDescending(order => order.Sum).Take(10);
-            foreach(var c in res){
-                textResult.text += (res + "\n");
-            }
-        }
-        //foreach(Heroes players in res){
-        //    textResult.text += (players.name + " - " + players.points + "\n");
-        //}
+
+        var res = data.players.Select(p => new {
+			name=p.name,
+			gold=p.heroes.Sum(h => h.gold)
+		}).OrderBy(g => g.gold).Take(10);
+		
+		foreach(var r in res) {
+			textResult.text += (r.name + "\n");	
+		}
     }
 
     public void Clear(){
